@@ -8,6 +8,7 @@
   </head>
   <body>
     <header class="header">
+      <img src="/images/anime.jpg" alt="fondo anime" class="header__img" />
       <h1 class="header__title">Buscador de Series de Anime</h1>
       <div class="header__search">
         <input type="text" class="header__search--input js-search" />
@@ -16,12 +17,14 @@
       </div>
     </header>
     <main class="main">
-      <section class="main__sectionFav js-favSection">
-        <h3>Series Favoritas</h3>
-      </section>
-      <section class="main__sectionResult js-resultSection">
-        <h3>Resultados de búsqueda</h3>
-      </section>
+      <div class="fav">
+        <h3 class="fav__title">Series Favoritas</h3>
+        <section class="main__fav js-favSection"></section>
+      </div>
+      <div class="result">
+        <h3 class="result__title">Resultados de búsqueda</h3>
+        <section class="main__result js-resultSection"></section>
+      </div>
     </main>
     <script type="text/javascript" src="./js/main.js"></script>
   </body>

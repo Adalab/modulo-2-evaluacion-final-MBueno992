@@ -1,27 +1,97 @@
 .header {
-  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__img {
+    opacity: 0.6;
+    height: 200px;
+    width: 100%;
+    z-index: -1;
+  }
   &__title {
+    position: absolute;
     text-align: center;
-    margin: 50px;
+    top: 50px;
+    background-color: black;
+    color: white;
   }
   &__search {
+    position: absolute;
+    top: 130px;
     display: flex;
     justify-content: center;
     gap: 10px;
+    &--input {
+      padding: 5px;
+      border-radius: 10px;
+      border: 2px solid rgb(148, 31, 31);
+      background-color: rgba(255, 255, 255, 1);
+    }
+    &--btn {
+      padding: 5px;
+      width: 70px;
+      background-color: rgb(148, 31, 31);
+      color: white;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 2px 2px 3px (black);
+    }
   }
 }
 
 .main {
   display: flex;
   gap: 30px;
-  &__sectionFav {
-    border: 2px solid black;
+  &__fav {
+    width: 200px;
+    &--series {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin: 15px;
+      img {
+        height: 90px;
+      }
+      h4 {
+        width: 100px;
+      }
+    }
   }
-  &__sectionResult {
-    border: 2px solid black;
+  &__result {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     padding: 10px;
+    &--series {
+      width: 210px;
+      margin: 5px;
+    }
   }
+}
+.fav {
+  border: 2px solid blue;
+  border-radius: 10px;
+  &__title {
+    background-color: blue;
+    color: white;
+  }
+}
+.result {
+  border: 2px solid red;
+  border-radius: 10px;
+  &__title {
+    background-color: red;
+    color: white;
+  }
+}
+.favorite {
+  border: 3px solid greenyellow;
+}
+.quitList {
+  background-color: black;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }
