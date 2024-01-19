@@ -3,11 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Adalab Web Starter Kit</title>
+    <title>Buscador series anime</title>
     <link rel="stylesheet" href="./scss/main.scss" />
   </head>
-
   <body>
+    <header class="header">
+      <h1 class="header__title">Buscador de Series de Anime</h1>
+      <div class="header__search">
+        <input type="text" class="header__search--input js-search" />
+        <button class="header__search--btn js-searchBtn">Buscar</button>
+        <button class="header__search--btn js-resetBtn">Reset</button>
+      </div>
+    </header>
+    <main class="main">
+      <section class="main__sectionFav js-favSection">
+        <h3>Series Favoritas</h3>
+      </section>
+      <section class="main__sectionResult js-resultSection">
+        <h3>Resultados de búsqueda</h3>
+      </section>
+    </main>
     <script type="text/javascript" src="./js/main.js"></script>
   </body>
 </html>

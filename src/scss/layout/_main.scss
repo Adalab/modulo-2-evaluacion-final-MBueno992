@@ -1,0 +1,27 @@
+.header {
+  height: 150px;
+  &__title {
+    text-align: center;
+    margin: 50px;
+  }
+  &__search {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+.main {
+  display: flex;
+  gap: 30px;
+  &__sectionFav {
+    border: 2px solid black;
+  }
+  &__sectionResult {
+    border: 2px solid black;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+}
