@@ -12,9 +12,16 @@
   &__title {
     position: absolute;
     text-align: center;
-    top: 50px;
     background-color: black;
+    width: 80vw;
     color: white;
+    font-size: 2.4rem;
+    top: 30px;
+    border-radius: 10px;
+    text-shadow: 3px 2px 5px #fff;
+    @media (min-width: 768px) {
+      top: 50px;
+    }
   }
   &__search {
     position: absolute;
@@ -42,19 +49,32 @@
 
 .main {
   display: flex;
+  flex-direction: column;
   gap: 30px;
+  margin: 20px;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
   &__fav {
-    width: 200px;
     &--series {
       display: flex;
-      align-items: center;
-      gap: 5px;
-      margin: 15px;
+      flex-direction: column;
+      margin: 10px;
       img {
-        height: 90px;
+        width: 75px;
       }
-      h4 {
-        width: 100px;
+      @media (min-width: 768px) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        margin: 10px;
+        img {
+          height: 90px;
+        }
+        h4 {
+          width: 100px;
+        }
       }
     }
   }
@@ -70,16 +90,17 @@
   }
 }
 .fav {
-  border: 2px solid blue;
-  border-radius: 10px;
+  border: 2px solid rgb(76, 205, 228);
+  border-radius: 5px;
   &__title {
-    background-color: blue;
+    background-color: rgb(76, 205, 228);
     color: white;
   }
 }
 .result {
   border: 2px solid red;
   border-radius: 10px;
+
   &__title {
     background-color: red;
     color: white;

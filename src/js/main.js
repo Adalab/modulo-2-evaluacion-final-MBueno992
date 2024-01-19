@@ -31,7 +31,7 @@ const addSearchResult = (series, container) => {
       article.setAttribute('class', 'main__fav--series');
       const span = document.createElement('span');
       const text = document.createTextNode('X');
-      span.setAttribute('class', 'quitList');
+      span.setAttribute('class', 'quitList js-remove');
       article.appendChild(span);
       span.appendChild(text);
     }
@@ -77,6 +77,7 @@ const handleFavoriteSerie = (event) => {
   localStorage.setItem('favSeries', JSON.stringify(favSeries));
 
   addSearchResult(favSeries, favSection);
+  handleRemove();
 };
 
 const listenerFavoriteSerie = () => {
@@ -87,4 +88,16 @@ const listenerFavoriteSerie = () => {
 };
 
 const refresh = JSON.parse(localStorage.getItem('favSeries'));
+
 addSearchResult(refresh, favSection);
+
+//BONUS
+const remove = document.querySelector('.js-remove');
+
+const handleRemove = (event) => {
+  const click = event.target;
+  const parent = event.currentTarget.id;
+  console.log(parent);
+};
+
+remove.addEventListener('click', handleRemove);
