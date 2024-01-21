@@ -11,19 +11,26 @@
       <img src="/images/anime.jpg" alt="fondo anime" class="header__img" />
       <h1 class="header__title">Buscador de Series de Anime</h1>
       <div class="header__search">
-        <input type="text" class="header__search--input js-search" />
-        <button class="header__search--btn js-searchBtn">Buscar</button>
+        <form>
+          <input type="text" class="header__search--input js-search" />
+          <input
+            type="submit"
+            value="Buscar"
+            class="header__search--btn js-searchBtn"
+          />
+        </form>
         <button class="header__search--btn js-resetBtn">Reset</button>
       </div>
     </header>
     <main class="main">
       <div class="fav">
         <h3 class="fav__title">Series Favoritas</h3>
-        <section class="main__fav js-favSection"></section>
+        <section class="fav__section js-favSection"></section>
+        <button class="fav__resetBtn js-resetFav">Eliminar</button>
       </div>
       <div class="result">
         <h3 class="result__title">Resultados de búsqueda</h3>
-        <section class="main__result js-resultSection"></section>
+        <section class="result__section js-resultSection"></section>
       </div>
     </main>
     <script type="text/javascript" src="./js/main.js"></script>
