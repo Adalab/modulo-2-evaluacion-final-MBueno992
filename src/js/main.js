@@ -3,7 +3,7 @@
 //Variables
 const inputSearch = document.querySelector('.js-search');
 const searchBtn = document.querySelector('.js-searchBtn');
-const resetBtn = document.querySelector('.js-resetBtn');
+const resetBtn = document.querySelectorAll('.js-resetBtn');
 const favSection = document.querySelector('.js-favSection');
 const resultSection = document.querySelector('.js-resultSection');
 const resetFavBtn = document.querySelector('.js-resetFav');
@@ -85,10 +85,8 @@ const addFavoriteSerie = (event) => {
   const serieId = favSeries.findIndex((fav) => fav.mal_id === id);
   if (serieId === -1) {
     favSeries.push(serieIndex);
-    //   serie.classList.add('favorite');
-    //serie.setAttribute('class', 'result__section--series js-serie favorite');
+    serie.classList.add('favorite');
   }
-
   favSection.innerHTML = '';
   localStorage.setItem('favorites', JSON.stringify(favSeries));
   addSearchResult(favSeries, favSection);
@@ -112,24 +110,28 @@ const listenerFavoriteSerie = () => {
 };
 
 //RESET (elimina también LocalStorage)
-const handleReset = () => {
-  resultSection.innerHTML = '';
+const handleReset = (event) => {
+  const favBtn = event.currentTarget;
+  const removeFav = favBtn.parentNode;
   favSection.innerHTML = '';
-  inputSearch.value = '';
   favSeries = [];
   localStorage.removeItem('favorites');
+  if (removeFav.id === 'headerContainer') {
+    resultSection.innerHTML = '';
+    inputSearch.value = '';
+  }
 };
-resetBtn.addEventListener('click', handleReset);
+resetBtn.forEach((reset) => reset.addEventListener('click', handleReset));
 
 //RESET sólo favoritos (elimina LocalStorage)
 
-const resetFavSection = () => {
-  favSeries = [];
-  localStorage.removeItem('favorites');
-  favSection.innerHTML = '';
-};
+// const resetFavSection = () => {
+//   favSeries = [];
+//   localStorage.removeItem('favorites');
+//   favSection.innerHTML = '';
+// };
 
-resetFavBtn.addEventListener('click', resetFavSection);
+// resetFavBtn.addEventListener('click', resetFavSection);
 
 //Al cargar la página,, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
 const refresh = JSON.parse(localStorage.getItem('favorites'));
