@@ -6,13 +6,15 @@ const searchBtn = document.querySelector('.js-searchBtn');
 const resetBtn = document.querySelector('.js-resetBtn');
 const favSection = document.querySelector('.js-favSection');
 const resultSection = document.querySelector('.js-resultSection');
-const resetFav = document.querySelector('.js-resetFav');
+const resetFavBtn = document.querySelector('.js-resetFav');
 
 let resultSeries = [];
 let favSeries = [];
 let animeSearch = '';
 
 //Funciones de búsqueda
+
+//Añade en el DOM las series
 
 const addSearchResult = (series, container) => {
   for (const anime of series) {
@@ -50,6 +52,7 @@ const addSearchResult = (series, container) => {
   listenerFavoriteSerie();
 };
 
+//Carga los datos desde la API
 const chargeDataApi = (event) => {
   event.preventDefault();
   fetch(`${animeSearch}`)
@@ -64,6 +67,7 @@ const chargeDataApi = (event) => {
 
 searchBtn.addEventListener('click', chargeDataApi);
 
+//Recoge los datos del input para poder generar el enlace de la API
 const handleSearchAnime = () => {
   const userSearch = inputSearch.value;
   animeSearch = `https://api.jikan.moe/v4/anime?q=${userSearch}`;
@@ -73,48 +77,64 @@ inputSearch.addEventListener('input', handleSearchAnime);
 
 //Funciones de Favoritos
 
-const handleFavoriteSerie = (event) => {
+//Añade a favoritos la serie y pinta en resultado la elección
+const addFavoriteSerie = (event) => {
   const serie = event.currentTarget;
   const id = parseInt(serie.id);
   const serieIndex = resultSeries.find((fav) => id === fav.mal_id);
   const serieId = favSeries.findIndex((fav) => fav.mal_id === id);
   if (serieId === -1) {
     favSeries.push(serieIndex);
-    serie.setAttribute('class', 'result__section--series js-serie favorite');
+    //   serie.classList.add('favorite');
+    //serie.setAttribute('class', 'result__section--series js-serie favorite');
   }
+
   favSection.innerHTML = '';
   localStorage.setItem('favorites', JSON.stringify(favSeries));
   addSearchResult(favSeries, favSection);
 };
 
+//Borra la serie clickada en X de favoritos
 const handleRemove = (event) => {
   const remove = event.currentTarget;
   const parent = remove.parentNode;
   const idRemove = parseInt(parent.id);
-  parent.remove(); //Elimina el artículo del DOM
-
-  const newRefresh = refresh.filter((item) => item.mal_id !== idRemove);
-  localStorage.setItem('favorites', JSON.stringify(newRefresh));
+  parent.remove();
+  //Elimina el artículo del DOM
 };
 
 //Escucha los elementos favoritos, se llama al crearse en el DOM en la función addSearchResult
 const listenerFavoriteSerie = () => {
   const serie = document.querySelectorAll('.js-serie');
-  serie.forEach((option) =>
-    option.addEventListener('click', handleFavoriteSerie)
-  );
+  serie.forEach((option) => option.addEventListener('click', addFavoriteSerie));
   const remove = document.querySelectorAll('.js-remove');
   remove.forEach((quit) => quit.addEventListener('click', handleRemove));
 };
-
-const refresh = JSON.parse(localStorage.getItem('favorites'));
-addSearchResult(refresh, favSection);
 
 //RESET (elimina también LocalStorage)
 const handleReset = () => {
   resultSection.innerHTML = '';
   favSection.innerHTML = '';
   inputSearch.value = '';
+  favSeries = [];
   localStorage.removeItem('favorites');
 };
 resetBtn.addEventListener('click', handleReset);
+
+//RESET sólo favoritos (elimina LocalStorage)
+
+const resetFavSection = () => {
+  favSeries = [];
+  localStorage.removeItem('favorites');
+  favSection.innerHTML = '';
+};
+
+resetFavBtn.addEventListener('click', resetFavSection);
+
+//Al cargar la página,, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
+const refresh = JSON.parse(localStorage.getItem('favorites'));
+if (!refresh) {
+  console.log('No hay datos en el LocalStorage');
+} else {
+  addSearchResult(refresh, favSection);
+}

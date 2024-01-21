@@ -27,7 +27,7 @@
     flex-direction: row;
     gap: 5px;
     padding: 8px;
-    overflow-x: scroll;
+    overflow-x: auto;
     @media (min-width: 768px) {
       flex-direction: column;
       overflow-x: hidden;

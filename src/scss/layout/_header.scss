@@ -2,43 +2,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  &__img {
-    opacity: 0.6;
-    height: 200px;
-    width: 100%;
-    z-index: -1;
+  @media (min-width: 768px) {
+    align-items: flex-start;
   }
+
   &__title {
-    position: absolute;
+    margin-top: 50px;
     text-align: center;
     background-color: black;
     width: 80vw;
-    color: white;
+    color: rgb(116, 244, 248);
     font-size: 2.4rem;
-    top: 30px;
     border-radius: 10px;
-    text-shadow: 3px 2px 5px #fff;
     @media (min-width: 768px) {
-      top: 50px;
+      margin: 20px;
+      text-align: start;
     }
   }
   &__search {
-    position: absolute;
-    top: 130px;
     display: flex;
-    justify-content: center;
     gap: 10px;
+    margin: 20px;
     &--input {
       padding: 5px;
       border-radius: 10px;
-      border: 2px solid rgb(148, 31, 31);
-      background-color: rgba(255, 255, 255, 1);
+      border: 2px solid rgb(116, 244, 248);
+      background-color: black;
+      color: white;
     }
     &--btn {
-      padding: 5px;
+      padding: 7px;
       width: 70px;
-      background-color: rgb(148, 31, 31);
+      background-color: rgb(116, 248, 226);
       color: white;
       border-radius: 5px;
       border: none;
