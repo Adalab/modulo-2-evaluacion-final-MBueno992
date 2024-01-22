@@ -24,8 +24,6 @@ const addSearchResult = (series, container) => {
     container.appendChild(article);
     const seriesImg = document.createElement('img');
     article.appendChild(seriesImg);
-    const seriesTitle = document.createElement('h4');
-    article.appendChild(seriesTitle);
     if (
       anime.images.webp.image_url ===
       `https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png`
@@ -38,6 +36,8 @@ const addSearchResult = (series, container) => {
       seriesImg.setAttribute('src', anime.images.webp.image_url);
     }
     seriesImg.setAttribute('alt', anime.title);
+    const seriesTitle = document.createElement('h4');
+    article.appendChild(seriesTitle);
     const title = document.createTextNode(anime.title);
     seriesTitle.appendChild(title);
     //Recorre el array y pinta los que están en favSeries
@@ -86,8 +86,7 @@ inputSearch.addEventListener('input', handleSearchAnime);
 
 //Añade a favoritos la serie
 const addFavoriteSerie = (event) => {
-  const serie = event.currentTarget;
-  const id = parseInt(serie.id);
+  const id = parseInt(event.currentTarget.id);
   const serieIndex = resultSeries.find((fav) => id === fav.mal_id);
   const serieId = favSeries.findIndex((fav) => fav.mal_id === id);
   if (serieId === -1) {
@@ -102,8 +101,7 @@ const addFavoriteSerie = (event) => {
 
 //Borra la serie clickada en X de favoritos
 const handleRemove = (event) => {
-  const remove = event.currentTarget;
-  const parent = remove.parentNode;
+  const parent = event.currentTarget.parentNode;
   const idRemove = parseInt(parent.id);
   const removeArray = favSeries.findIndex(
     (indexRemove) => indexRemove.mal_id === idRemove
