@@ -16,6 +16,7 @@ let animeSearch = '';
 //Añade en el DOM las series
 
 const addSearchResult = (series, container) => {
+  container.innerHTML = '';
   for (const anime of series) {
     const article = document.createElement('article');
     article.setAttribute('class', 'result__section--series js-serie');
@@ -40,7 +41,14 @@ const addSearchResult = (series, container) => {
     const title = document.createTextNode(anime.title);
     seriesTitle.appendChild(title);
 
-    if (series === favSeries) {
+    const isFavorite = favSeries.findIndex(
+      (fav) => fav.mal_id === anime.mal_id
+    );
+    if (isFavorite !== -1) {
+      article.classList.add('favorite');
+    }
+
+    if (series === favSeries || series === refresh) {
       article.setAttribute('class', 'fav__section--series');
       const span = document.createElement('span');
       const text = document.createTextNode('X');
@@ -49,6 +57,7 @@ const addSearchResult = (series, container) => {
       span.appendChild(text);
     }
   }
+
   listenerFavoriteSerie();
 };
 
@@ -59,7 +68,6 @@ const chargeDataApi = (event) => {
     .then((response) => response.json())
     .then((listSeries) => {
       resultSeries = listSeries.data;
-      resultSection.innerHTML = '';
       addSearchResult(resultSeries, resultSection);
     })
     .catch((error) => console.log('Error', error));
@@ -77,21 +85,20 @@ inputSearch.addEventListener('input', handleSearchAnime);
 
 //FAVORITOS
 
-//Añade a favoritos la serie y pinta en resultado la elección
+//Añade a favoritos la serie
 const addFavoriteSerie = (event) => {
   const serie = event.currentTarget;
   const id = parseInt(serie.id);
   const serieIndex = resultSeries.find((fav) => id === fav.mal_id);
   const serieId = favSeries.findIndex((fav) => fav.mal_id === id);
-
   if (serieId === -1) {
     favSeries.push(serieIndex);
   } else {
     favSeries.splice(serieId, 1);
   }
-  favSection.innerHTML = '';
   localStorage.setItem('favorites', JSON.stringify(favSeries));
   addSearchResult(favSeries, favSection);
+  addSearchResult(resultSeries, resultSection);
 };
 
 //Borra la serie clickada en X de favoritos
@@ -104,8 +111,8 @@ const handleRemove = (event) => {
   );
   favSeries.splice(removeArray, 1);
   localStorage.setItem('favorites', JSON.stringify(favSeries));
-  favSection.innerHTML = '';
   addSearchResult(favSeries, favSection);
+  addSearchResult(resultSeries, resultSection);
 };
 
 //Escucha los elementos favoritos, se llama al crearse en el DOM en la función addSearchResult
@@ -116,13 +123,15 @@ const listenerFavoriteSerie = () => {
   remove.forEach((quit) => quit.addEventListener('click', handleRemove));
 };
 
-//RESET (elimina también LocalStorage)
+//RESET
+
 const handleReset = (event) => {
   const favBtn = event.currentTarget;
   const removeFav = favBtn.parentNode;
   favSection.innerHTML = '';
   favSeries = [];
   localStorage.removeItem('favorites');
+  addSearchResult(resultSeries, resultSection);
   if (removeFav.id === 'headerContainer') {
     resultSection.innerHTML = '';
     inputSearch.value = '';
@@ -130,10 +139,12 @@ const handleReset = (event) => {
 };
 resetBtn.forEach((reset) => reset.addEventListener('click', handleReset));
 
-//Al cargar la página,, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
+//Al cargar la página, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
 const refresh = JSON.parse(localStorage.getItem('favorites'));
 if (!refresh) {
   console.log('No hay datos en el LocalStorage');
 } else {
+  //Agrega elementos de refresh a favSeries
+  favSeries = [...refresh];
   addSearchResult(refresh, favSection);
 }
