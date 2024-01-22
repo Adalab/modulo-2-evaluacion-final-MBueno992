@@ -6,13 +6,12 @@ const searchBtn = document.querySelector('.js-searchBtn');
 const resetBtn = document.querySelectorAll('.js-resetBtn');
 const favSection = document.querySelector('.js-favSection');
 const resultSection = document.querySelector('.js-resultSection');
-const resetFavBtn = document.querySelector('.js-resetFav');
 
 let resultSeries = [];
 let favSeries = [];
 let animeSearch = '';
 
-//Funciones de búsqueda
+//BUSQUEDA
 
 //Añade en el DOM las series
 
@@ -32,7 +31,7 @@ const addSearchResult = (series, container) => {
     ) {
       seriesImg.setAttribute(
         'src',
-        `https://placehold.co/210x295/c1c1c3/666666/?text=Imagen\n+no+encontrada`
+        `https://placehold.co/210x295/c1c1c3/666666/?text=Imagen+no+encontrada`
       );
     } else {
       seriesImg.setAttribute('src', anime.images.webp.image_url);
@@ -40,7 +39,8 @@ const addSearchResult = (series, container) => {
     seriesImg.setAttribute('alt', anime.title);
     const title = document.createTextNode(anime.title);
     seriesTitle.appendChild(title);
-    if (series === favSeries || series === refresh) {
+
+    if (series === favSeries) {
       article.setAttribute('class', 'fav__section--series');
       const span = document.createElement('span');
       const text = document.createTextNode('X');
@@ -75,7 +75,7 @@ const handleSearchAnime = () => {
 
 inputSearch.addEventListener('input', handleSearchAnime);
 
-//Funciones de Favoritos
+//FAVORITOS
 
 //Añade a favoritos la serie y pinta en resultado la elección
 const addFavoriteSerie = (event) => {
@@ -83,9 +83,11 @@ const addFavoriteSerie = (event) => {
   const id = parseInt(serie.id);
   const serieIndex = resultSeries.find((fav) => id === fav.mal_id);
   const serieId = favSeries.findIndex((fav) => fav.mal_id === id);
+
   if (serieId === -1) {
     favSeries.push(serieIndex);
-    serie.classList.add('favorite');
+  } else {
+    favSeries.splice(serieId, 1);
   }
   favSection.innerHTML = '';
   localStorage.setItem('favorites', JSON.stringify(favSeries));
@@ -97,8 +99,13 @@ const handleRemove = (event) => {
   const remove = event.currentTarget;
   const parent = remove.parentNode;
   const idRemove = parseInt(parent.id);
-  parent.remove();
-  //Elimina el artículo del DOM
+  const removeArray = favSeries.findIndex(
+    (indexRemove) => indexRemove.mal_id === idRemove
+  );
+  favSeries.splice(removeArray, 1);
+  localStorage.setItem('favorites', JSON.stringify(favSeries));
+  favSection.innerHTML = '';
+  addSearchResult(favSeries, favSection);
 };
 
 //Escucha los elementos favoritos, se llama al crearse en el DOM en la función addSearchResult
@@ -122,16 +129,6 @@ const handleReset = (event) => {
   }
 };
 resetBtn.forEach((reset) => reset.addEventListener('click', handleReset));
-
-//RESET sólo favoritos (elimina LocalStorage)
-
-// const resetFavSection = () => {
-//   favSeries = [];
-//   localStorage.removeItem('favorites');
-//   favSection.innerHTML = '';
-// };
-
-// resetFavBtn.addEventListener('click', resetFavSection);
 
 //Al cargar la página,, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
 const refresh = JSON.parse(localStorage.getItem('favorites'));
