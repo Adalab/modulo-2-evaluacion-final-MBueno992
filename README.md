@@ -6,8 +6,8 @@ El ejercicio consiste en desarrollar un buscador de series anime a través de la
 La maquetación del proyecto es sencilla, se basa en una entrada donde podemos buscar la serie que queremos, y tenemos dos secciones que mostrarán los resultados de las series y por otro lado el apartado de favoritos donde podremos añadir las series que más nos gusten.
 Además cuenta con dos botones, un **RESET** principal que nos devolverá la página a su estado inicial (sin datos cargados, sólo la estructura inicial), y otro botón en el apartado de _Favoritos_ llamado **eliminar** que nos borrará todas las series que tengamos añadidas en este campo.
 
-![versión mobile](/public/images/mobile.png)
-![versión desktop](/public/images/desktop.png)
+![versión mobile](/public/images/mobile.PNG)
+![versión desktop](/public/images/desktop.PNG)
 
 ### Herramientas utilizadas 🛠️
 
