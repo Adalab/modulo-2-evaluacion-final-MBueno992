@@ -9,9 +9,9 @@ const resultSection = document.querySelector('.js-resultSection');
 
 let resultSeries = [];
 let favSeries = [];
-let animeSearch = '';
+let animeSearch = ''; //recoge el valor del input
 
-//BUSQUEDA
+//BÚSQUEDA
 
 //Añade en el DOM las series
 
@@ -40,14 +40,14 @@ const addSearchResult = (series, container) => {
     seriesImg.setAttribute('alt', anime.title);
     const title = document.createTextNode(anime.title);
     seriesTitle.appendChild(title);
-
+    //Recorre el array y pinta los que están en favSeries
     const isFavorite = favSeries.findIndex(
       (fav) => fav.mal_id === anime.mal_id
     );
     if (isFavorite !== -1) {
       article.classList.add('favorite');
     }
-
+    // Se crea cuando el parámetro series tiene alguno de estos valores
     if (series === favSeries || series === refresh) {
       article.setAttribute('class', 'fav__section--series');
       const span = document.createElement('span');
@@ -57,7 +57,6 @@ const addSearchResult = (series, container) => {
       span.appendChild(text);
     }
   }
-
   listenerFavoriteSerie();
 };
 
@@ -124,7 +123,6 @@ const listenerFavoriteSerie = () => {
 };
 
 //RESET
-
 const handleReset = (event) => {
   const favBtn = event.currentTarget;
   const removeFav = favBtn.parentNode;
@@ -140,6 +138,7 @@ const handleReset = (event) => {
 resetBtn.forEach((reset) => reset.addEventListener('click', handleReset));
 
 //Al cargar la página, si hay datos en el LocalStorage los carga, sino muestra mensaje en consola
+
 const refresh = JSON.parse(localStorage.getItem('favorites'));
 if (!refresh) {
   console.log('No hay datos en el LocalStorage');
